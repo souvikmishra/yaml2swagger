@@ -30,10 +30,10 @@ export default function Home() {
           <ThemeSelector />
         </div>
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-4xl text-primary font-bold mb-4">
             OpenAPI Specification Converter
           </h1>
-          <p className="text-xl">
+          <p className="text-xl text-primary">
             Convert your OpenAPI specification to Postman collection, Swagger
             UI, and TypeScript types
           </p>

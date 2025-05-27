@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'catppuccin' | 'monokai';
 
 const ThemeContext = createContext<{
   theme: Theme;
@@ -14,6 +14,8 @@ const THEME_KEY = 'openapi-theme';
 const themeClassMap: Record<Theme, string> = {
   light: '',
   dark: 'dark',
+  catppuccin: 'catppuccin-mocha',
+  monokai: 'monokai-pro',
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

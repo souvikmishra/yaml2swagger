@@ -82,98 +82,100 @@ export function OutputSection({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Generated Outputs</h2>
-        <Button
-          onClick={generateOutputs}
-          disabled={isGenerating || !enableGenerate}
-        >
-          {isGenerating ? 'Generating...' : 'Generate Outputs'}
-        </Button>
-      </div>
+    <>
+      <div className="w-full max-w-4xl mx-auto p-4 space-y-6">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Generated Outputs</h2>
+          <Button
+            onClick={generateOutputs}
+            disabled={isGenerating || !enableGenerate}
+          >
+            {isGenerating ? 'Generating...' : 'Generate Outputs'}
+          </Button>
+        </div>
 
-      {error && (
-        <Card className="border-destructive">
-          <CardContent className="p-4 text-destructive">{error}</CardContent>
-        </Card>
-      )}
+        {error && (
+          <Card className="border-destructive">
+            <CardContent className="p-4 text-destructive">{error}</CardContent>
+          </Card>
+        )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Postman Collection */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Postman Collection</CardTitle>
-            <CardDescription>
-              Download a Postman collection for your API
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              variant="outline"
-              onClick={() =>
-                outputs.postman &&
-                downloadFile(outputs.postman, 'postman-collection.json')
-              }
-              disabled={!outputs.postman}
-              className="w-full"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Postman Collection */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Postman Collection</CardTitle>
+              <CardDescription>
+                Download a Postman collection for your API
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  outputs.postman &&
+                  downloadFile(outputs.postman, 'postman-collection.json')
+                }
+                disabled={!outputs.postman}
+                className="w-full"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download
+              </Button>
+            </CardContent>
+          </Card>
 
-        {/* Swagger UI */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Swagger UI</CardTitle>
-            <CardDescription>
-              Preview your API documentation Swagger style
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              variant="outline"
-              onClick={() => setShowSwaggerModal(true)}
-              disabled={!outputs.swagger}
-              className="w-full"
-            >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              Preview
-            </Button>
-          </CardContent>
-        </Card>
+          {/* Swagger UI */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Swagger UI</CardTitle>
+              <CardDescription>
+                Preview your API documentation Swagger style
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                variant="outline"
+                onClick={() => setShowSwaggerModal(true)}
+                disabled={!outputs.swagger}
+                className="w-full"
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Preview
+              </Button>
+            </CardContent>
+          </Card>
 
-        {/* TypeScript Types */}
-        <Card>
-          <CardHeader>
-            <CardTitle>TypeScript Types</CardTitle>
-            <CardDescription>
-              Download TypeScript type definitions
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              variant="outline"
-              onClick={() =>
-                outputs.typescript &&
-                downloadFile(outputs.typescript, 'api-types.ts')
-              }
-              disabled={!outputs.typescript}
-              className="w-full"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
-          </CardContent>
-        </Card>
+          {/* TypeScript Types */}
+          <Card>
+            <CardHeader>
+              <CardTitle>TypeScript Types</CardTitle>
+              <CardDescription>
+                Download TypeScript type definitions
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  outputs.typescript &&
+                  downloadFile(outputs.typescript, 'api-types.ts')
+                }
+                disabled={!outputs.typescript}
+                className="w-full"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Swagger Modal */}
       <Dialog open={showSwaggerModal} onOpenChange={setShowSwaggerModal}>
-        <DialogContent className="max-w-4xl h-[80vh]">
-          <DialogHeader>
+        <DialogContent className="w-screen sm:max-w-none h-screen p-0 flex flex-col">
+          <DialogHeader className="p-6 pb-2">
             <DialogTitle>Swagger UI Preview</DialogTitle>
             <DialogClose />
           </DialogHeader>
@@ -182,11 +184,11 @@ export function OutputSection({
               ref={swaggerIframeRef}
               srcDoc={outputs.swagger}
               title="Swagger UI Preview"
-              className="flex-1 w-full border-0 rounded-b-lg"
+              className="flex-1 w-full h-full border-0 rounded-b-lg"
             />
           )}
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 }

@@ -11,6 +11,8 @@ import {
 const themeNames: Record<Theme, string> = {
   light: 'Light',
   dark: 'Dark',
+  catppuccin: 'Catppuccin',
+  monokai: 'Monokai',
 };
 
 export function ThemeSelector() {
