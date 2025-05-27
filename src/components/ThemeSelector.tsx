@@ -13,6 +13,7 @@ const themeNames: Record<Theme, string> = {
   dark: 'Dark',
   catppuccin: 'Catppuccin',
   monokai: 'Monokai',
+  claude: 'Claude',
 };
 
 export function ThemeSelector() {

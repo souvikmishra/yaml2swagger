@@ -24,7 +24,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col justify-between bg-primary-foreground">
+    <main className="min-h-screen flex flex-col justify-between">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-end mb-4">
           <ThemeSelector />
