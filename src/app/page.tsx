@@ -24,7 +24,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-primary-foreground">
+    <main className="min-h-screen flex flex-col justify-between bg-primary-foreground">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-end mb-4">
           <ThemeSelector />
@@ -53,6 +53,17 @@ export default function Home() {
 
         {spec && <OutputSection spec={spec} enableGenerate={isSpecValid} />}
       </div>
+      <footer className="py-4 text-center text-sm text-muted-foreground">
+        Made with ❤️ by{' '}
+        <a
+          href="https://avgweb.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          kivous
+        </a>
+      </footer>
     </main>
   );
 }
