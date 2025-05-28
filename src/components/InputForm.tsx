@@ -1,11 +1,13 @@
 import { useState, useCallback, useRef } from 'react';
-import { Upload, FileText } from 'lucide-react';
+import { Upload, FileText, X } from 'lucide-react';
 import * as yaml from 'js-yaml';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import type { OpenAPIObject } from 'openapi-typescript';
+import { Label } from './ui/label';
+import { Input } from './ui/input';
 
 interface InputFormProps {
   onSpecParsed: (spec: OpenAPIObject) => void;
@@ -20,16 +22,21 @@ export function InputForm({
 }: InputFormProps) {
   const [textInput, setTextInput] = useState('');
   const [isValid, setIsValid] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (!file) {
         setIsValid(false);
+        setSelectedFile(null);
         if (onValidityChange) onValidityChange(false);
         return;
       }
+
+      setSelectedFile(file);
 
       try {
         const text = await file.text();
@@ -39,6 +46,7 @@ export function InputForm({
         onSpecParsed(spec);
       } catch (error) {
         setIsValid(false);
+        setSelectedFile(null);
         if (onValidityChange) onValidityChange(false);
         onError(
           error instanceof Error ? error.message : 'Failed to parse file'
@@ -47,6 +55,15 @@ export function InputForm({
     },
     [onSpecParsed, onError, onValidityChange]
   );
+
+  const clearFile = useCallback(() => {
+    setSelectedFile(null);
+    setIsValid(false);
+    if (onValidityChange) onValidityChange(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [onValidityChange]);
 
   const handleTextSubmit = useCallback(
     (event: React.FormEvent) => {
@@ -117,19 +134,31 @@ export function InputForm({
 
           <TabsContent value="file" className="mt-6">
             <div className="border-2 border-dashed rounded-lg p-8 text-center">
-              <input
-                type="file"
-                accept=".json,.yaml,.yml"
-                onChange={handleFileUpload}
-                className="hidden"
-                id="file-upload"
-              />
-              <label htmlFor="file-upload">
-                <Button variant="outline" className="cursor-pointer">
-                  <Upload className="w-4 h-4 mr-2" />
-                  Choose File
-                </Button>
-              </label>
+              {!selectedFile ? (
+                <div className="grid w-full mx-auto mb-6 max-w-sm items-center gap-1.5">
+                  <Label htmlFor="file-upload">Choose File</Label>
+                  <Input
+                    ref={fileInputRef}
+                    className="hover:cursor-pointer"
+                    type="file"
+                    id="file-upload"
+                    accept=".json,.yaml,.yml"
+                    onChange={handleFileUpload}
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-sm">{selectedFile.name}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearFile}
+                    className="h-8 w-8 p-0"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
               <p className="mt-2 text-sm text-muted-foreground">
                 Upload a .json or .yaml file containing your OpenAPI
                 specification
