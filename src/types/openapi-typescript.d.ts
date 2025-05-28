@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'openapi-typescript' {
   export interface OpenAPIObject {
     openapi: string;

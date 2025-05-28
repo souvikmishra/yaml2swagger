@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'swagger-to-postman' {
   interface ConvertOptions {
     folderStrategy?: 'paths' | 'tags';

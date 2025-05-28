@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'openapi-to-postmanv2' {
   interface ConvertOptions {
     folderStrategy?: 'paths' | 'tags';
